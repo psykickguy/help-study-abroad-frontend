@@ -1,36 +1,196 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# HELP STUDY ABROAD – Frontend Technical Assessment
 
-## Getting Started
+A modern admin dashboard built with **Next.js**, **Material-UI**, and **Zustand**, integrating public APIs from **DummyJSON**.  
+The application demonstrates authentication, state management, pagination, filtering, performance optimizations, and clean UI/UX patterns.
 
-First, run the development server:
+---
 
+## Tech Stack
+
+- **Next.js (App Router)**
+- **Material UI (MUI)** – UI components & layout
+- **Zustand** – State management
+- **Axios** – API calls
+- **DummyJSON API** – Public backend
+
+---
+
+## Features Overview
+
+### Authentication
+- Admin login page built using MUI
+- Authentication via DummyJSON Auth API  
+  `POST https://dummyjson.com/auth/login`
+- JWT token stored in **Zustand state**
+- Authenticated users are redirected to dashboard
+- Protected dashboard routes (unauthenticated users cannot access)
+
+> **Note:**  
+> Authentication is implemented using Zustand for simplicity and clarity.  
+> In a production system, **NextAuth** would be layered on top for OAuth providers, session handling, and SSR-based auth.
+
+---
+
+### Users Management
+
+#### Users List
+- API:
+  - `GET /users?limit=10&skip=0`
+  - `GET /users/search?q=...`
+- Features:
+  - Pagination (API-based)
+  - Search filtering
+  - Responsive MUI table
+- Displayed fields:
+  - Name
+  - Email
+  - Gender
+  - Phone
+  - Company
+
+#### Single User View
+- API:
+  - `GET /users/{id}`
+- Clean, card-based layout with information hierarchy
+- Grouped sections:
+  - Contact details
+  - Location & education
+- “Back to Users” navigation
+
+---
+
+### Products Management
+
+#### Products List
+- APIs:
+  - `GET /products?limit=10&skip=0`
+  - `GET /products/search?q=...`
+  - `GET /products/category/{category}`
+- Features:
+  - Pagination
+  - Search
+  - Category filter
+  - Responsive grid layout
+- Displayed:
+  - Image
+  - Title
+  - Price
+  - Category
+  - Rating
+
+#### Single Product View
+- API:
+  - `GET /products/{id}`
+- Product details:
+  - Image
+  - Description
+  - Price
+  - Rating
+  - Category
+- “Back to Products” navigation
+
+> **Note:**  
+> A single primary image is displayed for clarity.  
+> An image carousel (e.g., MUI Carousel) can be added easily if required.
+
+---
+
+## State Management (Zustand)
+
+Zustand is used to manage:
+- Authentication state
+- Users data
+- Products data
+- Loading & pagination state
+
+### Why Zustand?
+- Minimal boilerplate compared to Redux
+- Built-in support for async actions
+- Small bundle size
+- Simple global state access
+- Ideal for small–medium dashboards
+
+---
+
+## Performance Optimizations
+
+- **API-side pagination** prevents loading large datasets
+- **React.memo** used for reusable components (e.g., product cards)
+- **useCallback** used for navigation handlers
+- Avoided unnecessary re-renders
+- Clean component separation
+
+---
+
+## Client-Side Caching Strategy
+
+- Users and products list responses are cached in **Zustand store**
+- Cache keys are based on:
+  - Pagination
+  - Search query
+  - Category filter
+- Cached data is reused when navigating pagination or revisiting filters
+
+### Why caching?
+- Reduces redundant API calls
+- Improves perceived performance
+- Enhances UX when navigating back and forth
+
+---
+
+## UI / UX Design
+
+- Entire UI built with **Material-UI**
+- Clean admin-style SaaS layout
+- Proper spacing, hierarchy, and grouping
+- Responsive design for:
+  - Login page
+  - Users list
+  - Products list
+  - Detail pages
+- Neutral light background for better readability
+
+---
+
+## Setup Instructions
+
+### 1. Clone the repository
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/your-username/help-study-abroad-frontend.git
+cd help-study-abroad-frontend
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies
+```
+npm install
+```
+4. Run the development server
+```
+npm run dev
+```
+Open:
+```http://localhost:3000```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Folder Structure
 
-## Learn More
+```
+app/
+ ├─ login/
+ ├─ dashboard/
+ │   ├─ users/
+ │   ├─ products/
+store/
+ ├─ authStore.ts
+ ├─ userStore.ts
+ ├─ productStore.ts
+```
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Author
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Shubham Das
+- Frontend Developer
+- Built as part of HELP STUDY ABROAD Frontend Technical Assessment
